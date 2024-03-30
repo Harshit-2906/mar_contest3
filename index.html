@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Form</title>
+    <style>
+        .form-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .error {
+            color: red;
+        }
+
+        .success {
+            color: green;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="form-container">
+        <h2>Signup Form</h2>
+        <form id="signup-form">
+            <div>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email">
+                <span id="email-error" class="error"></span>
+            </div>
+            <div>
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password">
+                <span id="password-error" class="error"></span>
+            </div>
+            <button type="submit">Submit</button>
+        </form>
+        <p id="status"></p>
+    </div>
+
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            if (validateEmail(email) && validatePassword(password)) {
+                if (confirm("Do you want to sign up?")) {
+                    alert("Successful signup!");
+                } else {
+                    window.location.reload();
+                }
+            }
+        });
+
+        document.getElementById('email').addEventListener('input', function () {
+            var emailInput = this.value;
+            var emailError = document.getElementById('email-error');
+            if (emailInput.length < 3 || emailInput.indexOf('@') === -1 || emailInput.indexOf('.') === -1) {
+                emailError.textContent = 'Make sure email is more than 3 characters and has @ and a.';
+            } else {
+                emailError.textContent = '';
+            }
+        });
+
+        document.getElementById('password').addEventListener('input', function () {
+            var passwordInput = this.value;
+            var passwordError = document.getElementById('password-error');
+            if (passwordInput.length < 8) {
+                passwordError.textContent = 'Make sure password is more than 8 characters.';
+            } else {
+                passwordError.textContent = '';
+            }
+        });
+
+        function validateEmail(email) {
+            return email.length >= 3 && email.indexOf('@') !== -1 && email.indexOf('.') !== -1;
+        }
+
+        function validatePassword(password) {
+            return password.length >= 8;
+        }
+    </script>
+
+</body>
+
+</html>
